@@ -1,179 +1,248 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Gayatri Parivar Registration</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
-<style>
-body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(135deg,#ff9a9e,#fad0c4,#fbc2eb,#a1c4fd);min-height:100vh;}
-header{text-align:center;padding:20px;font-weight:bold;font-size:22px;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,0.3);}
-.container{ max-width:900px; margin:20px auto; background:#fff; border-radius:12px; padding:20px; box-shadow:0 8px 30px rgba(0,0,0,0.2);}
-.hidden{ display:none; }
-h2,h3{text-align:center;}
-label{ display:block; margin-top:10px; font-size:14px; }
-input,textarea,select{ width:100%; padding:8px; margin-top:4px; border:1px solid #ccc; border-radius:6px; }
-textarea{ resize:vertical; }
-button{ margin:10px; padding:10px 20px; border:none; border-radius:8px; background:#ff7a7a; color:#fff; font-weight:bold; cursor:pointer; }
-.btn-row{ text-align:center; margin-top:20px; }
-img.preview{ max-width:200px; display:block; margin:10px 0; border:1px solid #ddd; border-radius:6px; }
-table{border-collapse:collapse;width:100%;margin-top:10px;}
-table,th,td{border:1px solid #aaa;text-align:center;padding:5px;}
-</style>
+  <meta charset="UTF-8">
+  <title>JP RESIDENCY</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(-45deg, #0f0c29, #302b63, 
+
+#24243e, #4b0082);
+      background-size: 400% 400%;
+      animation: gradient 10s ease infinite;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .container {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 25px;
+      border-radius: 15px;
+      width: 500px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 22px;
+      text-align: center;
+      margin-bottom: 20px;
+      color: #ffcc00;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-size: 14px;
+      text-align: left;
+    }
+    input, select {
+      width: 95%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 8px;
+      border: none;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      background: #ff6600;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover { background: #ff3300; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      color: white;
+    }
+    table, th, td {
+      border: 1px solid white;
+      padding: 8px;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-<header>WELL COME TO GAYATRI PARIVAR</header>
+  <div class="container" id="main">
+    <h1>WELCOME TO GAYATRI PARIVAAR</h1>
+    <button onclick="showNewRegistration()">New 
 
-<!-- Home Page -->
-<div class="container" id="homePage">
-<h2>Choose Option</h2>
-<div class="btn-row">
-<button onclick="showPage('newRegPage')">New Registration</button>
-<button onclick="showPage('loginPage')">Already Registered</button>
-</div>
-</div>
+Registration</button>
+    <br><br>
+    <button onclick="showOwnerLogin()">Already Registered 
 
-<!-- New Registration Page -->
-<div class="container hidden" id="newRegPage">
-<h2>New Registration</h2>
-<form id="regForm">
-<label>First Name*</label><input name="firstName" required>
-<label>Last Name*</label><input name="lastName" required>
-<label>Purpose of Living*</label><input name="purpose" required>
-<label>Mobile Number*</label><input name="mobile" pattern="[0-9]{10}" required>
-<label>Another Mobile Number</label><input name="mobile2" pattern="[0-9]{10}">
-<label>Number of Living Members (1-4)*</label><input type="number" name="members" min="1" max="4" required>
-<label>Aadhaar Number (12 digits)*</label><input name="aadhaar" pattern="[0-9]{12}" required>
-<label>Official Address*</label><textarea name="address" required></textarea>
-<label>Official Mobile*</label><input name="officialMobile" pattern="[0-9]{10}" required>
-<label>Date of Living*</label><input type="date" name="dateLiving" required>
-<label>Room Rent Per Month*</label><input type="number" name="rent" required>
-<label>Advance Rupees*</label><input type="number" name="advance" required>
-<label>Electric Meter Reading*</label><input type="number" name="electric" required>
-<label>ID Proof (Aadhaar Image)*</label><input type="file" name="idProof" accept="image/*" required>
-<label>Signature Image*</label><input type="file" name="signature" accept="image/*" required>
-<div class="btn-row"><button type="submit">Register Now</button></div>
-</form>
-</div>
-
-<!-- Registration Success Page -->
-<div class="container hidden" id="successPage">
-<h2>Registration Successful ✅</h2>
-<p>Your Registration Number: <b id="regNumber"></b></p>
-<div class="btn-row">
-<button id="sendBtn">Send via SMS</button>
-<button id="waBtn" style="background:#25d366;">Send via WhatsApp</button>
-<button id="pdfBtn" style="background:#007bff;">Download PDF</button>
-</div>
-<div class="btn-row"><button onclick="showPage('homePage')">Back Home</button></div>
-</div>
-
-<!-- Already Registered Login -->
-<div class="container hidden" id="loginPage">
-<h2>Already Registered</h2>
-<label>Registration Number</label><input type="text" id="loginRegNo">
-<label>Password</label><input type="password" id="loginPass">
-<div class="btn-row"><button onclick="login()">Login</button></div>
-</div>
-
-<!-- Details Page -->
-<div class="container hidden" id="detailsPage">
-<h2>Your Registration Details</h2>
-<div id="detailsContent"></div>
-<h3>Monthly Payment Table</h3>
-<table>
-<thead><tr><th>Month (Year)</th><th>Rent</th><th>Status</th></tr></thead>
-<tbody id="paymentBody"></tbody>
-</table>
-<div class="btn-row">
-<button id="pdfDetailsBtn" style="background:#007bff;">Download PDF</button>
-<button onclick="showPage('homePage')">Back Home</button>
-</div>
-</div>
+(Only for Owner)</button>
+  </div>
 
 <script>
-const PASSWORD="AAYUSHMANSINGH8681";
-const OWNER_NUMBER="9942823314";
+let regCounter = 1;
+let registrations = {};
+const PASSWORD = "AM8681";
 
-function showPage(id){
-  document.querySelectorAll('.container').forEach(c=>c.classList.add('hidden'));
-  document.getElementById(id).classList.remove('hidden');
-}
+function showNewRegistration(){
+  document.getElementById("main").innerHTML = `
+    <h1>JP RESIDENCY</h1>
+    <form id="regForm">
+      <label>First Name:</label><input required pattern="[A-Za-
 
-function pad3(n){ return String(n).padStart(3,'0'); }
+z]+" name="fname">
+      <label>Last Name:</label><input required pattern="[A-Za-
 
-function getNextReg(){
-  let last=parseInt(localStorage.getItem("lastRegNo")||"0",10);
-  last++;
-  localStorage.setItem("lastRegNo",last);
-  return "AMSINGH"+pad3(last);
-}
+z]+" name="lname">
+      <label>Purpose of Living:</label><input required 
 
-function fileToBase64(file){
-  return new Promise((res,rej)=>{
-    const r=new FileReader();
-    r.onload=()=>res(r.result);
-    r.onerror=()=>rej();
-    r.readAsDataURL(file);
-  });
-}
+pattern="[A-Za-z ]+" name="purpose">
+      <label>Mobile Number:</label><input type="number" required 
 
-// New Registration
-document.getElementById("regForm").addEventListener("submit", async e=>{
-  e.preventDefault();
-  const f=new FormData(e.target);
-  const data=Object.fromEntries(f.entries());
-  data.firstName=data.firstName.toUpperCase();
-  data.lastName=data.lastName.toUpperCase();
-  const regNo=getNextReg();
-  data.regNo=regNo;
+name="mobile" maxlength="10">
+      <label>Another Mobile:</label><input type="number" required 
 
-  if(f.get("idProof").size>0) data.idProof=await fileToBase64(f.get("idProof"));
-  if(f.get("signature").size>0) data.signature=await fileToBase64(f.get("signature"));
+name="mobile2" maxlength="10">
+      <label>Members (1-4):</label><input type="number" min="1" 
 
-  localStorage.setItem("reg_"+regNo,JSON.stringify(data));
+max="4" required name="members">
+      <label>Aadhaar Number (12 digits):</label><input type="text" 
 
-  document.getElementById("regNumber").innerText=regNo;
-  showPage('successPage');
+pattern="\\d{12}" required name="aadhaar">
+      <label>Official Address:</label><input required 
 
-  let msg=`Registration: ${regNo}\nName: ${data.firstName} ${data.lastName}\nMobile: ${data.mobile}\nPurpose: ${data.purpose}\nRent: ${data.rent}`;
-  document.getElementById("sendBtn").onclick=()=>{ window.location.href=`sms:${OWNER_NUMBER}?body=${encodeURIComponent(msg)}`; };
-  document.getElementById("waBtn").onclick=()=>{ window.open(`https://wa.me/91${OWNER_NUMBER}?text=${encodeURIComponent(msg)}`,"_blank"); };
-  document.getElementById("pdfBtn").onclick=()=>{ alert("PDF generation feature coming soon"); };
-});
+name="address">
+      <label>Official Mobile:</label><input type="number" required 
 
-// Already Registered Login
-function login(){
-  const reg=document.getElementById("loginRegNo").value.trim();
-  const pass=document.getElementById("loginPass").value.trim();
-  if(pass!==PASSWORD){ alert("Invalid password!"); return; }
-  const saved=localStorage.getItem("reg_"+reg);
-  if(!saved){ alert("Registration not found!"); return; }
-  const d=JSON.parse(saved);
+name="offmobile">
+      <label>Date of Living:</label><input type="date" required 
 
-  // Show details
-  let html="";
-  for(let k in d){
-    if(k==="idProof"||k==="signature"){
-      html+=`<p><b>${k}:</b><br><img src="${d[k]}" class="preview"/></p>`;
-    }else{
-      html+=`<p><b>${k}:</b> ${d[k]}</p>`;
+name="date">
+      <label>Room Rent per Month:</label><input type="number" 
+
+required name="rent">
+      <label>Advance Rupees Paid:</label><input type="number" 
+
+required name="advance">
+      <label>Electric Meter Reading:</label><input type="number" 
+
+step="0.1" required name="meter">
+      <label>ID Proof (Aadhaar Image):</label><input type="file" 
+
+accept="image/*" required name="idproof">
+      <label>Signature Image:</label><input type="file" 
+
+accept="image/*" required name="sign">
+      <button type="submit">Register Now</button>
+    </form>`;
+  
+  document.getElementById("regForm").onsubmit = function(e){
+    e.preventDefault();
+    let data = Object.fromEntries(new FormData(e.target).entries
+
+());
+
+    if(registrations[data.aadhaar]){
+      alert("⚠️ You have already registered!");
+      return;
     }
+
+    let regNo = "AM" + String(regCounter).padStart(3,'0');
+    regCounter++;
+    registrations[data.aadhaar] = {regNo, ...data};
+
+    document.getElementById("main").innerHTML = `
+      <h1>JP RESIDENCY</h1>
+      <p>✅ Registration Successful!</p>
+      <p>Your Registration Number: <b>${regNo}</b></p>
+      <button onclick="sendSMS('${regNo}')">Send Details via 
+
+SMS</button>
+      <button onclick="sendWhatsApp('${regNo}')">Send via 
+
+WhatsApp</button>
+      <button onclick="downloadPDF('${regNo}')">Download 
+
+PDF</button>
+    `;
   }
-  document.getElementById("detailsContent").innerHTML=html;
+}
 
-  // Monthly Payment Table
-  const paymentBody=document.getElementById("paymentBody");
-  paymentBody.innerHTML="";
-  const months=["January","February","March","April","May","June","July","August","September","October","November","December"];
-  months.forEach(m=>{
-    const tr=document.createElement("tr");
-    tr.innerHTML=`<td>${m}</td><td>${d.rent}</td><td><select><option>Not Done</option><option>Done</option></select></td>`;
-    paymentBody.appendChild(tr);
-  });
+function showOwnerLogin(){
+  document.getElementById("main").innerHTML = `
+    <h1>JP RESIDENCY</h1>
+    <label>Registration Number:</label><input id="ownerReg">
+    <label>Password:</label><input type="password" 
 
-  showPage("detailsPage");
+id="ownerPass">
+    <button onclick="ownerAccess()">Login</button>
+  `;
+}
+
+function ownerAccess(){
+  let reg = document.getElementById("ownerReg").value.trim();
+  let pass = document.getElementById("ownerPass").value.trim();
+
+  let user = Object.values(registrations).find(r => r.regNo === reg);
+  if(user && pass === PASSWORD){
+    let details = `
+      <h1>JP RESIDENCY</h1>
+      <p><b>Registration Number:</b> ${user.regNo}</p>
+      <p><b>Name:</b> ${user.fname} ${user.lname}</p>
+      <p><b>Purpose:</b> ${user.purpose}</p>
+      <p><b>Mobile:</b> ${user.mobile}, ${user.mobile2}</p>
+      <p><b>Members:</b> ${user.members}</p>
+      <p><b>Aadhaar:</b> ${user.aadhaar}</p>
+      <p><b>Address:</b> ${user.address}</p>
+      <p><b>Office Mobile:</b> ${user.offmobile}</p>
+      <p><b>Date of Living:</b> ${user.date}</p>
+      <p><b>Rent:</b> ${user.rent}</p>
+      <p><b>Advance:</b> ${user.advance}</p>
+      <p><b>Meter Reading:</b> ${user.meter}</p>
+      <h3>Rent Payment Table</h3>
+      <table>
+        <tr><th>Month-
+
+Year</th><th>Rent</th><th>Status</th></tr>
+        <tr><td>Jan 2025</td><td>${user.rent}</td><td>Paid/Not 
+
+Paid</td></tr>
+        <tr><td>Feb 2025</td><td>${user.rent}</td><td>Paid/Not 
+
+Paid</td></tr>
+      </table>
+      <button onclick="downloadPDF('${user.regNo}')">Download 
+
+PDF</button>
+    `;
+    document.getElementById("main").innerHTML = details;
+  } else {
+    alert("❌ Invalid Registration No. or Password");
+  }
+}
+
+function sendSMS(regNo){
+  window.location.href = `sms:9942823314?body=Registration 
+
+Details of ${regNo}`;
+}
+function sendWhatsApp(regNo){
+  window.open(`https://wa.me/919942823314?text=Registration 
+
+Details of ${regNo}`,'_blank');
+}
+function downloadPDF(regNo){
+  alert("PDF Download option works if integrated with jsPDF 
+
+library (can be added later). For now, use browser print to save as 
+
+PDF.");
 }
 </script>
 </body>
